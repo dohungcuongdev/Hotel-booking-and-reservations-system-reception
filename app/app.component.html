@@ -1,0 +1,73 @@
+<h2>Reservation Form</h2>
+
+<form #userForm="ngForm" (ngSubmit)="onSubmit(name.value, ssn.value, bd.value, cityName.value, checkin.value, pp.value)">
+	<div class="form-group">
+		<label>Name</label>
+		<input type="text" class="form-control" minlength="6" maxlength="10" required name="name" #name="ngModel" ngModel/>
+		<div *ngIf="name.errors && (name.dirty || name.touched)" class="alert alert-danger">
+			<div [hidden]="!name.errors.required">
+				Name is required
+			</div>
+			<div [hidden]="!name.errors.minlength">
+				Name must be at least 6 characters.
+			</div>
+			<div [hidden]="!name.errors.maxlength">
+				Name cannot has more than 10 characters
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label>SSN</label>
+		<input type="text" pattern="^[1-9][0-9]{8}$" class="form-control" required name="ssn" #ssn="ngModel" ngModel/>
+	</div>
+	<div *ngIf="ssn.errors && (ssn.dirty || ssn.touched)" class="alert alert-danger">
+		<div [hidden]="!ssn.errors.required">
+			SSN is required
+		</div>
+		<div [hidden]="!ssn.errors.pattern">
+			SSN must be have 9 digits.
+		</div>
+	</div>
+	<div class="form-group">
+		<label>Birthday</label>
+		<input type="date" class="form-control" required name="bd" #bd="ngModel" ngModel/>
+	</div>
+	<div *ngIf="bd.errors && (bd.dirty || bd.touched)" class="alert alert-danger">
+		<div [hidden]="!bd.errors.required">
+			Birthday is required
+		</div>
+	</div>
+	<div class="form-group">
+		<label>Time check in</label>
+		<input type="datetime-local" class="form-control" required name="checkin" #checkin="ngModel" ngModel/>
+	</div>
+	<div *ngIf="checkin.errors && (checkin.dirty || checkin.touched)" class="alert alert-danger">
+		<div [hidden]="!checkin.errors.required">
+			Time check in is required
+		</div>
+	</div>
+	<div class="form-group">
+		<label>City</label>
+		<select class="form-control" required name="cityName" #cityName ngModel>
+			<option *ngFor="let city of cities" [value]="city.Name">{{city.Name}}</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label>Passport (If have)</label>
+		<input type="text" class="form-control" name="pp" #pp="ngModel" ngModel/>
+	</div>
+	<div>
+		<label>Your information:</label>
+		<p> Name: {{name.value}} </p>
+		<p> SSN: {{ssn.value}} </p>
+		<p> Birthday: {{bd.value}} </p>
+		<p> City: {{cityName.value}} </p>
+		<p> Time Check in: {{checkin.value}} </p>
+		<p> Passport: {{pp.value}} </p>
+	</div>
+	<button type="submit" [disabled]="!userForm.valid" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+<label>{{form_result}}</label>
